@@ -5,14 +5,20 @@ import { Image } from "expo-image";
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import Constants from "expo-constants";
+import * as dayjs from "dayjs";
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 const weatherIcon = require("./assets/clear_sky.svg");
 
 const Item = ({ time }) => {
+  const date = dayjs(new Date(time.item.time));
   return (
     <View style={styles.item}>
-      <Text>{time.item.time}</Text>
-      <Text>{time?.item.data?.instant?.details?.air_temperature}</Text>
+      <Text>{date.format("DD MMMM, HH:mm")}</Text>
+      <Text>
+        {"Temp: " + time?.item.data?.instant?.details?.air_temperature + " °C"}
+      </Text>
     </View>
   );
 };
@@ -69,9 +75,11 @@ export default function App() {
   } else if (weatherData) {
     text = JSON.stringify(weatherData);
   }
-  console.log(currentPlace)
+  console.log(currentPlace);
   //variables
-  const city = currentPlace?.features[0]?.properties?.city || currentPlace?.features[0]?.properties?.county;
+  const city =
+    currentPlace?.features[0]?.properties?.city ||
+    currentPlace?.features[0]?.properties?.county;
   const country = currentPlace?.features[0]?.properties?.country;
   const temperature =
     weatherData?.properties.timeseries[0].data.instant.details.air_temperature;
@@ -88,6 +96,19 @@ export default function App() {
       .air_pressure_at_sea_level;
   return (
     <View style={styles.container}>
+
+      <LinearGradient
+        colors={["rgba(48,184,255,1.8)", "transparent"]}
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: -600,
+          height: 1500,   
+          transform: [{ rotate: "45" }],
+        }}
+      />
+
       <View style={styles.imageContainer}>
         <Text style={styles.cityTxt}>{city}</Text>
         <Text style={styles.countryTxt}>{country}</Text>
@@ -99,6 +120,7 @@ export default function App() {
         <View style={styles.secondaryInf}>
           <Text style={styles.secondaryTxt}>Humidity</Text>
           <Text style={styles.secondaryTxt}>{humidityVal + " %"}</Text>
+          <Text style={styles.secondaryTxt}></Text>
           <Text style={styles.secondaryTxt}>Wind</Text>
           <Text style={styles.secondaryTxt}>{windSpeedVal + " m/s"}</Text>
         </View>
@@ -106,6 +128,7 @@ export default function App() {
         <View style={styles.secondaryInf}>
           <Text style={styles.secondaryTxt}>Precipitation</Text>
           <Text style={styles.secondaryTxt}>{precipitationAmount + " mm"}</Text>
+          <Text style={styles.secondaryTxt}></Text>
           <Text style={styles.secondaryTxt}>Pressure</Text>
           <Text style={styles.secondaryTxt}>{pressureVal + " hPa"}</Text>
         </View>
@@ -114,6 +137,7 @@ export default function App() {
       <SafeAreaView style={styles.listView}>
         {weatherData?.properties?.timeseries?.length ? (
           <FlatList
+            horizontal
             data={weatherData.properties?.timeseries}
             renderItem={(time) => <Item time={time} />}
             keyExtractor={(time) => time.time}
@@ -151,8 +175,8 @@ const styles = StyleSheet.create({
     marginTop: 45,
   },
   cityTxt: {
-    fontSize: 40,
-    paddingTop: 25,
+    fontSize: 45,
+    paddingTop: 15,
   },
   countryTxt: {
     fontSize: 15,
@@ -169,7 +193,7 @@ const styles = StyleSheet.create({
     // flex: 4,
     flexDirection: "column",
     alignItems: "center",
-    marginHorizontal: 45
+    marginHorizontal: 45,
   },
   secondaryTxt: {
     fontSize: 20,
@@ -181,11 +205,14 @@ const styles = StyleSheet.create({
     // flex: 1,
     marginTop: StatusBar.currentHeight+25 || 0,
     maxHeight: 300,
+    maxWidth: 780,
   },
   item: {
     backgroundColor: "#f9c2ff",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
+    borderRadius: 38,       
+    textAlign: "center", 
   },
 });
