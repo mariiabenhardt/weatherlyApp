@@ -6,6 +6,8 @@ import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import Constants from "expo-constants";
 import * as dayjs from "dayjs";
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 const weatherIcon = require("./assets/clear_sky.svg");
 
@@ -94,6 +96,19 @@ export default function App() {
       .air_pressure_at_sea_level;
   return (
     <View style={styles.container}>
+
+      <LinearGradient
+        colors={["rgba(48,184,255,1.8)", "transparent"]}
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: -600,
+          height: 1500,   
+          transform: [{ rotate: "45" }],
+        }}
+      />
+
       <View style={styles.imageContainer}>
         <Text style={styles.cityTxt}>{city}</Text>
         <Text style={styles.countryTxt}>{country}</Text>
@@ -105,6 +120,7 @@ export default function App() {
         <View style={styles.secondaryInf}>
           <Text style={styles.secondaryTxt}>Humidity</Text>
           <Text style={styles.secondaryTxt}>{humidityVal + " %"}</Text>
+          <Text style={styles.secondaryTxt}></Text>
           <Text style={styles.secondaryTxt}>Wind</Text>
           <Text style={styles.secondaryTxt}>{windSpeedVal + " m/s"}</Text>
         </View>
@@ -112,6 +128,7 @@ export default function App() {
         <View style={styles.secondaryInf}>
           <Text style={styles.secondaryTxt}>Precipitation</Text>
           <Text style={styles.secondaryTxt}>{precipitationAmount + " mm"}</Text>
+          <Text style={styles.secondaryTxt}></Text>
           <Text style={styles.secondaryTxt}>Pressure</Text>
           <Text style={styles.secondaryTxt}>{pressureVal + " hPa"}</Text>
         </View>
@@ -158,7 +175,7 @@ const styles = StyleSheet.create({
     marginTop: 45,
   },
   cityTxt: {
-    fontSize: 40,
+    fontSize: 45,
     paddingTop: 15,
   },
   countryTxt: {
@@ -186,15 +203,16 @@ const styles = StyleSheet.create({
   mainTxt: {},
   listView: {
     // flex: 1,
-    marginTop: 25 || 0,
+    marginTop: StatusBar.currentHeight+25 || 0,
     maxHeight: 300,
-    maxWidth: 700,
+    maxWidth: 780,
   },
   item: {
-    backgroundColor: "#6CC5BF",
+    backgroundColor: "#f9c2ff",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
-    borderRadius: 38,
+    borderRadius: 38,       
+    textAlign: "center", 
   },
 });
