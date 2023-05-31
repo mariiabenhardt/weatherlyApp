@@ -208,10 +208,10 @@ const styles = StyleSheet.create({
     maxWidth: 780,
   },
   item: {
-    backgroundColor: "#f9c2ff",
+    backgroundColor: "#7BB4F5",
     padding: 20,
     marginVertical: 8,
-    marginHorizontal: 16,
+    marginHorizontal: 10,
     borderRadius: 38,       
     textAlign: "center", 
   },
