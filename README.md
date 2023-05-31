@@ -8,4 +8,3 @@ For running you need expo: https://docs.expo.dev/get-started/installation/#expo-
 
 and API key for reverse geo API: https://apidocs.geoapify.com/docs/geocoding/reverse-geocoding/#about
 
-Test test test
